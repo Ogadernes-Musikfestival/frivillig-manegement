@@ -14,32 +14,13 @@ datasource db {
 }
 
 
-model Holdleder {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+// ==========================
+// Enums
+// ==========================
 
-}
-
-model Frivillig {
-  id                String   @id @default(uuid())
-
-  // Core contact info
-  navn              String
-  email             String
-  telefon           String?
-
-  // Preferences (soft wishes)
-  onsketVagtMed     String?   // Free text: names, nicknames, social wishes
-  onsketOmraade     Omraade?
-
-  // Comments / human context
-  kommentar         String?   // Notes, wishes, social info, anything relevant
-
-  // Admin / system
-  status            FrivilligStatus @default(TILMELDT)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
 }
 
 enum Omraade {
@@ -55,3 +36,39 @@ enum FrivilligStatus {
   TILDELT_VAGT
 }
 
+
+
+
+model AdminUser {
+  id           String    @id @default(uuid())
+  username     String    @unique
+  passwordHash String
+  role         AdminRole
+  isActive     Boolean
+  createdFrivillige Frivillig[] @relation("CreatedByAdmin")
+  
+}
+
+
+model Frivillig {
+  id                String   @id @default(uuid())
+
+  // Core contact info
+  navn              String 
+  email             String
+  telefon           String?
+
+  // Preferences (soft wishes)
+  onsketVagtMed     String?   // Free text: names, nicknames, social wishes
+  onsketOmraade     Omraade?
+
+  // Comments / human context
+  kommentar         String?   // Notes, wishes, social info, anything relevant
+
+  // Admin / system
+  status            FrivilligStatus @default(TILMELDT)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  createdById       String? 
+  createdBy   AdminUser? @relation("CreatedByAdmin", fields: [createdById], references: [id])
+  }
