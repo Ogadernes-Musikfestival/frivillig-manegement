@@ -8,7 +8,7 @@ const frivilligSchema = z.object({
   email: z.string().email("Ugyldig email"),
   telefon: z.string().optional(),
   kommentar: z.string().optional(),
-  onsketOmraade: z.nativeEnum(Omraade).optional(),
+  omraade: z.enum(Omraade).optional(),
 });
 
 export async function POST(req: Request) {
@@ -31,8 +31,8 @@ export async function POST(req: Request) {
     data: {
       navn: validatedData.navn,
       email: validatedData.email,
-      telefon: validatedData.telefon,
-      omraade: validatedData.onsketOmraade ?? Omraade.LEDIG,
+      telefon: validatedData.telefon ?? null,
+      omraade: validatedData.omraade ?? Omraade.LEDIG,
       kommentar: validatedData.kommentar,
     },
   });
