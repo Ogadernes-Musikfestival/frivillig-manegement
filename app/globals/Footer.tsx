@@ -1,12 +1,7 @@
 import React from "react";
-import SignOut from "./auth/SignOut";
 
 const Footer = () => {
-  return (
-    <footer>
-      <SignOut />
-    </footer>
-  );
+  return <footer></footer>;
 };
 
 export default Footer;
