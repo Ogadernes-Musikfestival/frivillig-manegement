@@ -1,8 +1,8 @@
-import { formatOmraade, formatTime } from "@/lib/constants";
+import { formatOmraade } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 
-import AddShiftForm from "./AddShiftForm";
 import EditFrivilligForm from "./EditFrivilligForm";
+import AddShift from "./AddShift";
 
 export default async function PanelGridEntry() {
   const frivillige = await prisma.frivillig.findMany({
@@ -34,15 +34,15 @@ export default async function PanelGridEntry() {
               <p className="text-sm">{formatOmraade(frivillig.omraade)}</p>
             </div>
             <div className="flex flex-col text-sm font-semibold">
-              {frivillig.shifts.length > 0 ? (
-                frivillig.shifts.map((shift) => (
-                  <p key={shift.id}>
-                    {formatTime(shift.startTime)} - {formatTime(shift.endTime)}
-                  </p>
-                ))
-              ) : (
-                <AddShiftForm frivilligId={frivillig.id} />
-              )}
+              {frivillig.shifts.length > 0
+                ? frivillig.shifts.map((shift) => (
+                    <p key={shift.id}>
+                      {shift.startTime} - {shift.endTime}
+                    </p>
+                  ))
+                : frivillig.omraade === "HEGNVAGT" && (
+                    <AddShift frivilligId={frivillig.id} />
+                  )}
             </div>
           </div>
 

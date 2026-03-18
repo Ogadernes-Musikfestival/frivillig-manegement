@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Omraade } from "@/app/generated/prisma/enums";
+import { HEGN_SLOTS } from "@/lib/constants";
 
 const frivilligSchema = z.object({
   navn: z.string().min(2, "Navn skal være mindst 2 karakterer"),
@@ -9,6 +10,7 @@ const frivilligSchema = z.object({
   telefon: z.string().optional(),
   kommentar: z.string().optional(),
   omraade: z.enum(Omraade).optional(),
+  slotId: z.string().optional(),
 });
 
 export async function POST(req: Request) {
@@ -27,7 +29,7 @@ export async function POST(req: Request) {
 
   const validatedData = result.data;
 
-  await prisma.frivillig.create({
+  const frivillig = await prisma.frivillig.create({
     data: {
       navn: validatedData.navn,
       email: validatedData.email,
@@ -36,6 +38,20 @@ export async function POST(req: Request) {
       kommentar: validatedData.kommentar,
     },
   });
+
+  if (validatedData.omraade === "HEGNVAGT" && validatedData.slotId) {
+    const slot = HEGN_SLOTS.find((s) => s.id === validatedData.slotId);
+
+    if (slot) {
+      await prisma.shift.create({
+        data: {
+          startTime: slot.start,
+          endTime: slot.end,
+          frivilligId: frivillig.id,
+        },
+      });
+    }
+  }
 
   return NextResponse.json({ success: true });
 }

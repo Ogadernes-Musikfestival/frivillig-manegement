@@ -28,8 +28,8 @@ model Frivillig {
 
 model Shift {
   id          String   @id @default(cuid())
-  startTime   DateTime
-  endTime     DateTime
+  startTime   String
+  endTime     String
 
 
   frivilligId String

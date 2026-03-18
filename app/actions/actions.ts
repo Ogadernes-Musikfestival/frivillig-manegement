@@ -1,6 +1,6 @@
 "use server";
 
-import { PrismaOmraade } from "@/lib/constants";
+import { HEGN_SLOTS, PrismaOmraade } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
@@ -29,17 +29,20 @@ export async function createFrivillig(formData: FormData) {
   revalidatePath("/");
 }
 
-export async function createShift(frivilligId: string, formData: FormData) {
-  const festivalDate = "2026-05-09";
+export async function createShift(formData: FormData) {
+  const frivilligId = formData.get("frivilligId") as string;
+  const slotId = formData.get("slotId") as string;
 
-  const startTime = formData.get("startTime") as string;
-  const endTime = formData.get("endTime") as string;
+  if (!frivilligId || !slotId) throw new Error("Missing frivilligId or slotId");
+
+  const slot = HEGN_SLOTS.find((s) => s.id === slotId);
+  if (!slot) throw new Error("Invalid slot");
 
   await prisma.shift.create({
     data: {
       frivilligId,
-      startTime: new Date(`${festivalDate}T${startTime}`),
-      endTime: new Date(`${festivalDate}T${endTime}`),
+      startTime: slot.start,
+      endTime: slot.end,
     },
   });
 
