@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 import EditFrivilligForm from "./EditFrivilligForm";
 import AddShift from "./AddShift";
 
+export const dynamic = "force-dynamic";
+
 export default async function PanelGridEntry() {
   const frivillige = await prisma.frivillig.findMany({
     include: {
