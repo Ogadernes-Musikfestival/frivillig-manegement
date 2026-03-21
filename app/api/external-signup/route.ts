@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Omraade } from "@/app/generated/prisma/enums";
 import { HEGN_SLOTS } from "@/lib/constants";
+import { Resend } from "resend";
+import WelcomeEmail from "@/emails/velkommen";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const frivilligSchema = z.object({
   navn: z.string().min(2, "Navn skal være mindst 2 karakterer"),
@@ -51,6 +55,18 @@ export async function POST(req: Request) {
         },
       });
     }
+  }
+
+  try {
+    await resend.emails.send({
+      from: "ØMFEST <frivillig@mail.oemfest.dk>",
+      to: "validatedData.email",
+      subject: "Tak for du vil hjælpe til ØMFEST 🎉",
+      react: WelcomeEmail({ navn: validatedData.navn }),
+    });
+  } catch (err) {
+    console.error("Email failed:", err);
+    // 👈 IMPORTANT: don't break signup if email fails
   }
 
   return NextResponse.json({ success: true });

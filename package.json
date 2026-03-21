@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "email:dev": "email dev"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -15,6 +16,8 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "@prisma/adapter-pg": "^7.3.0",
+    "@react-email/components": "1.0.10",
+    "@react-email/tailwind": "2.0.6",
     "bcrypt": "^6.0.0",
     "better-auth": "^1.4.18",
     "class-variance-authority": "^0.7.1",
@@ -26,12 +29,14 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "resend": "^6.9.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@prisma/client": "^7.3.0",
+    "@react-email/preview-server": "5.2.10",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
     "@types/node": "^20",
@@ -42,6 +47,7 @@
     "eslint-config-next": "16.1.6",
     "pnpm": "^10.28.2",
     "prisma": "^7.3.0",
+    "react-email": "5.2.10",
     "shadcn": "^3.8.4",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
