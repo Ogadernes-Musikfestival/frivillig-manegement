@@ -59,7 +59,7 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: "ØMFEST <frivillig@mail.oemfest.dk>",
+      from: "ØMFEST <noreply@mail.oemfest.dk>",
       to: validatedData.email,
       subject: "Tak for du vil hjælpe til ØMFEST 🎉",
       react: WelcomeEmail({ navn: validatedData.navn }),
