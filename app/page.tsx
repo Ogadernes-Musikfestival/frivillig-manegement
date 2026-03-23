@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import PanelGridEntry from "./globals/PanelGridEntry";
 import Sidebar from "./globals/Sidebar";
 
