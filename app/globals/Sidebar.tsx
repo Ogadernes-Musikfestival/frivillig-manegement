@@ -69,7 +69,7 @@ const Sidebar = async ({ searchParams }: Props) => {
             <Button
               variant={!active ? "default" : "outline"}
               size={"lg"}
-              className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
+              className="border border-primary mb-1 border-solid px-3 py-1.5 text-lg md:text-xl font-normal"
             >
               Samlet antal
               <Badge>{countFrivillige}</Badge>
