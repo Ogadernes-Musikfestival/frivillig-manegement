@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { createFrivillig } from "../actions/actions";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Field,
   FieldDescription,
@@ -21,6 +21,18 @@ import { PrismaOmraade, OMRAADE_LABELS } from "@/lib/constants";
 
 const FrivilligForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const handleGenerateEmail = (e: React.MouseEvent) => {
+    e.preventDefault(); // Stop the form from submitting
+
+    // Create a unique timestamped email
+    const tempEmail = `mangler-${Date.now()}@system.local`;
+
+    if (emailRef.current) {
+      emailRef.current.value = tempEmail;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent full page reload
@@ -58,9 +70,23 @@ const FrivilligForm = () => {
             </Field>
 
             <Field>
-              <FieldLabel>Email</FieldLabel>
-
-              <Input type="email" name="email" required />
+              <div className="flex justify-between items-end mb-1">
+                <FieldLabel>Email</FieldLabel>
+                <button
+                  type="button"
+                  onClick={handleGenerateEmail}
+                  className="text-xs text-blue-600 hover:underline mb-1"
+                >
+                  Generer midlertidig email
+                </button>
+              </div>
+              <Input
+                ref={emailRef}
+                type="text"
+                name="email"
+                placeholder="navn@eksempel.dk"
+                required
+              />
             </Field>
 
             <Field>

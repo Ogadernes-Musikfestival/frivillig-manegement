@@ -16,10 +16,20 @@ export async function createNote(formData: FormData) {
 }
 
 export async function createFrivillig(formData: FormData) {
+  const name = formData.get("navn") as string;
+  const makeEmail = formData.get("email") as string;
+
+  const email =
+    makeEmail && makeEmail.trim() !== ""
+      ? makeEmail
+      : `mangler-${name
+          .toLocaleLowerCase()
+          .replace(/\s+/g, ".")}-${Date.now()}@system.local`;
+
   await prisma.frivillig.create({
     data: {
-      navn: formData.get("navn") as string,
-      email: formData.get("email") as string,
+      navn: name,
+      email: email,
       kommentar: formData.get("kommentar") as string,
       telefon: (formData.get("telefon") as string) || null,
       omraade: formData.get("omraade") as PrismaOmraade,

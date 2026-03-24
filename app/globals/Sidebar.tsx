@@ -72,7 +72,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5 text-lg md:text-xl font-normal"
             >
               Samlet antal
-              <Badge>{countFrivillige}</Badge>
+              <Badge className="bg-light text-dark">{countFrivillige}</Badge>
             </Button>
           </Link>
         </li>
@@ -84,7 +84,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Hegn
-              <Badge>{countHegn}</Badge>
+              <Badge className="bg-neon-hegn text-dark">{countHegn}</Badge>
             </Button>
           </Link>
         </li>
@@ -97,20 +97,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Køkken
-              <Badge>{countKokken}</Badge>
-            </Button>
-          </Link>
-        </li>
-
-        <li>
-          <Link href="?omraade=LEDIG">
-            <Button
-              variant={isActive("LEDIG") ? "default" : "outline"}
-              size={"lg"}
-              className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
-            >
-              Ledig
-              <Badge>{countLedige}</Badge>
+              <Badge className="bg-neon-koekken text-dark">{countKokken}</Badge>
             </Button>
           </Link>
         </li>
@@ -123,7 +110,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Opsætning
-              <Badge>{countOp}</Badge>
+              <Badge className="bg-neon-opsaetning text-dark">{countOp}</Badge>
             </Button>
           </Link>
         </li>
@@ -135,7 +122,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Nedtagning
-              <Badge>{countNed}</Badge>
+              <Badge className="bg-neon-nedtagning text-dark">{countNed}</Badge>
             </Button>
           </Link>
         </li>
@@ -147,7 +134,7 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Bar
-              <Badge>{countBar}</Badge>
+              <Badge className="bg-neon-bar text-dark">{countBar}</Badge>
             </Button>
           </Link>
         </li>
@@ -160,7 +147,9 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Diverse
-              <Badge>{countDiverse}</Badge>
+              <Badge className="bg-neon-diverse text-dark">
+                {countDiverse}
+              </Badge>
             </Button>
           </Link>
         </li>
@@ -173,7 +162,21 @@ const Sidebar = async ({ searchParams }: Props) => {
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Legeplads
-              <Badge>{countLegeplads}</Badge>
+              <Badge className="bg-neon-legeplads text-dark">
+                {countLegeplads}
+              </Badge>
+            </Button>
+          </Link>
+        </li>
+        <li>
+          <Link href="?omraade=LEDIG">
+            <Button
+              variant={isActive("LEDIG") ? "default" : "outline"}
+              size={"lg"}
+              className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
+            >
+              Ledig
+              <Badge className="bg-neon-ledig text-dark">{countLedige}</Badge>
             </Button>
           </Link>
         </li>

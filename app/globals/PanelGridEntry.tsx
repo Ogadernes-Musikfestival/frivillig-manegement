@@ -1,4 +1,4 @@
-import { formatOmraade } from "@/lib/constants";
+import { formatOmraade, OMRAADE_BG_COLORS } from "@/lib/constants";
 import { Omraade } from "@/app/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 
@@ -36,7 +36,16 @@ export default async function PanelGridEntry({ omraade }: Props) {
             <p className="font-extralight text-sm pr-2 hidden md:block border-r-2">
               {index + 1}
             </p>
-            <div className="bg-green-300 py-1 px-2 rounded-sm inline-block">
+            <div
+              className={`
+              ${OMRAADE_BG_COLORS[frivillig.omraade]} 
+              py-1 
+              px-2 
+              rounded-sm 
+              inline-block
+              shadow-sm
+            `}
+            >
               <p className="text-sm">{formatOmraade(frivillig.omraade)}</p>
             </div>
             <div className="flex flex-col text-sm font-semibold">

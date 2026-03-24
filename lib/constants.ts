@@ -24,3 +24,14 @@ export const HEGN_SLOTS = [
   { id: "5", start: "19:00", end: "21:30" },
   { id: "6", start: "21:00", end: "23:30" },
 ];
+
+export const OMRAADE_BG_COLORS: Record<PrismaOmraade, string> = {
+  [PrismaOmraade.HEGNVAGT]: "bg-neon-hegn",
+  [PrismaOmraade.KOKKEN]: "bg-neon-koekken",
+  [PrismaOmraade.OPSAETNING]: "bg-neon-cyan",
+  [PrismaOmraade.NEDTAGNING]: "bg-neon-orange",
+  [PrismaOmraade.BAR]: "bg-neon-pink",
+  [PrismaOmraade.LEGEPLADS]: "bg-neon-lime",
+  [PrismaOmraade.DIVERSE]: "bg-neon-magenta",
+  [PrismaOmraade.LEDIG]: "bg-neon-turbo",
+};

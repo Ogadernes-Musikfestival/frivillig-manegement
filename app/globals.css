@@ -51,6 +51,15 @@
   --color-dark: #1a0d36;
   --color-white: #ffffff;
   --coler-grey: #cccccc;
+  --color-neon-ledig: #00ddff;
+  --color-neon-legeplads: #ff6ad5;
+  --color-neon-koekken: #fbe282;
+  --color-neon-hegn: #c4fcef;
+  --color-neon-opsaetning: #ffa33f;
+  --color-neon-nedtagning: #f46384;
+
+  --color-neon-bar: #ccff00;
+  --color-neon-diverse: #e0e0ff;
 }
 
 :root {
