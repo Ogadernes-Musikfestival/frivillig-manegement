@@ -17,7 +17,7 @@ export const formatOmraade = (omraade: PrismaOmraade) =>
   OMRAADE_LABELS[omraade];
 
 export const HEGN_SLOTS = [
-  { id: "1", start: "11:00", end: "13:30" },
+  { id: "1", start: "11:30", end: "13:30" },
   { id: "2", start: "13:00", end: "15:30" },
   { id: "3", start: "15:00", end: "17:30" },
   { id: "4", start: "17:00", end: "19:30" },

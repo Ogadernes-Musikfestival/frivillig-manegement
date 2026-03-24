@@ -1,11 +1,17 @@
 import { formatOmraade } from "@/lib/constants";
+import { Omraade } from "@/app/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 
 import EditFrivilligForm from "./EditFrivilligForm";
 import AddShift from "./AddShift";
 
-export default async function PanelGridEntry() {
+type Props = {
+  omraade?: Omraade;
+};
+
+export default async function PanelGridEntry({ omraade }: Props) {
   const frivillige = await prisma.frivillig.findMany({
+    where: omraade ? { omraade: omraade as Omraade } : {},
     include: {
       shifts: true,
     },

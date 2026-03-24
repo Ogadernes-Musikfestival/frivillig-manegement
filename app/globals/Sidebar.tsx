@@ -4,7 +4,14 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import React from "react";
 
-const Sidebar = async () => {
+type Props = {
+  searchParams: { omraade?: string };
+};
+
+const Sidebar = async ({ searchParams }: Props) => {
+  const active = searchParams.omraade;
+
+  const isActive = (value?: string) => active === value;
   const countFrivillige = await prisma.frivillig.count();
   const countLedige = await prisma.frivillig.count({
     where: {
@@ -58,9 +65,21 @@ const Sidebar = async () => {
     <aside className="px-8 col-span-12 flex justify-between items-center py-8 md:py-12">
       <ul className="flex flex-wrap text-black text-lg md:text-xl items-center gap-1 md:gap-4 ">
         <li>
-          <Link href="#">
+          <Link href="/">
             <Button
-              variant={"outline"}
+              variant={!active ? "default" : "outline"}
+              size={"lg"}
+              className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
+            >
+              Samlet antal
+              <Badge>{countFrivillige}</Badge>
+            </Button>
+          </Link>
+        </li>
+        <li>
+          <Link href="?omraade=HEGNVAGT">
+            <Button
+              variant={isActive("HEGNVAGT") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -71,9 +90,9 @@ const Sidebar = async () => {
         </li>
 
         <li>
-          <Link href="#">
+          <Link href="?omraade=KOKKEN">
             <Button
-              variant={"outline"}
+              variant={isActive("KOKKEN") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -84,9 +103,9 @@ const Sidebar = async () => {
         </li>
 
         <li>
-          <Link href="#">
+          <Link href="?omraade=LEDIG">
             <Button
-              variant={"outline"}
+              variant={isActive("LEDIG") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -97,9 +116,9 @@ const Sidebar = async () => {
         </li>
 
         <li>
-          <Link href="#">
+          <Link href="?omraade=OPSAETNING">
             <Button
-              variant={"outline"}
+              variant={isActive("OPSAETNING") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -109,9 +128,9 @@ const Sidebar = async () => {
           </Link>
         </li>
         <li>
-          <Link href="#">
+          <Link href="?omraade=NEDTAGNING">
             <Button
-              variant={"outline"}
+              variant={isActive("NEDTAGNING") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -121,9 +140,9 @@ const Sidebar = async () => {
           </Link>
         </li>
         <li>
-          <Link href="#">
+          <Link href="?omraade=BAR">
             <Button
-              variant={"outline"}
+              variant={isActive("BAR") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -134,9 +153,9 @@ const Sidebar = async () => {
         </li>
 
         <li>
-          <Link href="#">
+          <Link href="?omraade=DIVERSE">
             <Button
-              variant={"outline"}
+              variant={isActive("DIVERSE") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
@@ -147,26 +166,14 @@ const Sidebar = async () => {
         </li>
 
         <li>
-          <Link href="#">
+          <Link href="?omraade=LEGEPLADS">
             <Button
-              variant={"outline"}
+              variant={isActive("LEGEPLADS") ? "default" : "outline"}
               size={"lg"}
               className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
             >
               Legeplads
               <Badge>{countLegeplads}</Badge>
-            </Button>
-          </Link>
-        </li>
-        <li>
-          <Link href="#">
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              className="border border-primary mb-1 border-solid px-3 py-1.5  text-lg md:text-xl font-normal"
-            >
-              Samlet antal
-              <Badge>{countFrivillige}</Badge>
             </Button>
           </Link>
         </li>
