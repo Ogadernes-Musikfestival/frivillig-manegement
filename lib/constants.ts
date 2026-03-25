@@ -28,10 +28,10 @@ export const HEGN_SLOTS = [
 export const OMRAADE_BG_COLORS: Record<PrismaOmraade, string> = {
   [PrismaOmraade.HEGNVAGT]: "bg-neon-hegn",
   [PrismaOmraade.KOKKEN]: "bg-neon-koekken",
-  [PrismaOmraade.OPSAETNING]: "bg-neon-cyan",
-  [PrismaOmraade.NEDTAGNING]: "bg-neon-orange",
-  [PrismaOmraade.BAR]: "bg-neon-pink",
-  [PrismaOmraade.LEGEPLADS]: "bg-neon-lime",
-  [PrismaOmraade.DIVERSE]: "bg-neon-magenta",
-  [PrismaOmraade.LEDIG]: "bg-neon-turbo",
+  [PrismaOmraade.OPSAETNING]: "bg-neon-opsaetning",
+  [PrismaOmraade.NEDTAGNING]: "bg-neon-nedtagning",
+  [PrismaOmraade.BAR]: "bg-neon-bar",
+  [PrismaOmraade.LEGEPLADS]: "bg-neon-legeplads",
+  [PrismaOmraade.DIVERSE]: "bg-neon-diverse",
+  [PrismaOmraade.LEDIG]: "bg-neon-ledig",
 };
