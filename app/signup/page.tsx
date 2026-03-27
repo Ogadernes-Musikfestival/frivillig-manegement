@@ -1,45 +1,25 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/auth-client";
+import { signUpAction } from "@/app/actions/auth";
 
 export default function SignUpPage() {
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-
-    const formData = new FormData(e.currentTarget);
-
-    const res = await signUp.email({
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
-    });
-
-    if (res.error) {
-      setError(res.error.message || "Something went wrong.");
-    } else {
-      router.push("/dashboard");
-    }
-  }
-
   return (
     <div className="col-span-8 px-8 space-y-4">
       <h1 className="text-2xl font-bold">Sign Up</h1>
 
-      {error && <p className="text-red-500">{error}</p>}
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form action={signUpAction} className="space-y-4">
         <input
           name="name"
           placeholder="Navn"
           required
           className="w-full rounded-md outline-1 border border-primary px-3 py-2"
         />
+
+        <input
+          name="username"
+          placeholder="Brugernavn"
+          required
+          className="w-full rounded-md outline-1 border border-primary px-3 py-2"
+        />
+
         <input
           name="email"
           type="email"

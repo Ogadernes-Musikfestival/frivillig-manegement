@@ -1,18 +1,29 @@
 "use server";
 
+import { auth } from "@/lib/auth";
 import { HEGN_SLOTS, PrismaOmraade } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 export async function createNote(formData: FormData) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    throw new Error("Du skal være logget ind for at oprette en note");
+  }
   await prisma.note.create({
     data: {
       title: formData.get("title") as string,
       content: formData.get("content") as string,
+      createdById: session.user.id,
     },
   });
 
   revalidatePath("/");
+  revalidatePath("/noter");
 }
 
 export async function createFrivillig(formData: FormData) {
