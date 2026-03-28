@@ -70,6 +70,28 @@ export async function createShift(formData: FormData) {
   revalidatePath("/");
 }
 
+export async function updateShift(formData: FormData) {
+  const shiftId = formData.get("shiftId") as string;
+  const slotId = formData.get("slotId") as string;
+
+  if (!shiftId || !slotId) {
+    throw new Error("Missing shiftId or slotId");
+  }
+
+  const slot = HEGN_SLOTS.find((s) => s.id === slotId);
+  if (!slot) throw new Error("Invalid slot");
+
+  await prisma.shift.update({
+    where: { id: shiftId },
+    data: {
+      startTime: slot.start,
+      endTime: slot.end,
+    },
+  });
+
+  revalidatePath("/");
+}
+
 export async function updateFrivillig(id: string, formData: FormData) {
   await prisma.frivillig.update({
     where: { id },

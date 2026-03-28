@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 
 import EditFrivilligForm from "./EditFrivilligForm";
 import AddShift from "./AddShift";
+import EditShift from "./EditShift";
 
 type Props = {
   omraade?: Omraade;
@@ -13,16 +14,29 @@ export default async function PanelGridEntry({ omraade }: Props) {
   const frivillige = await prisma.frivillig.findMany({
     where: omraade ? { omraade: omraade as Omraade } : {},
     include: {
-      shifts: true,
+      shifts: {
+        orderBy: {
+          startTime: "asc",
+        },
+      },
     },
     orderBy: {
       omraade: "asc",
     },
   });
 
+  const sortedFrivillige =
+    omraade === "HEGNVAGT"
+      ? [...frivillige].sort((a, b) => {
+          const aTime = a.shifts[0]?.startTime ?? "99:99"; // volunteers without a shift go last
+          const bTime = b.shifts[0]?.startTime ?? "99:99";
+          return aTime.localeCompare(bTime);
+        })
+      : frivillige;
+
   return (
     <div className="grid col-span-12">
-      {frivillige.map((frivillig, index) => (
+      {sortedFrivillige.map((frivillig, index) => (
         <div
           className="border-t-2 px-8 pt-8 pb-5 grid grid-cols-1 md:grid-cols-4 xl:grid-cols-7 gap-y-1 md:gap-x-4 items-start"
           key={frivillig.id}
@@ -51,9 +65,7 @@ export default async function PanelGridEntry({ omraade }: Props) {
             <div className="flex flex-col text-sm font-semibold">
               {frivillig.shifts.length > 0
                 ? frivillig.shifts.map((shift) => (
-                    <p key={shift.id}>
-                      {shift.startTime} - {shift.endTime}
-                    </p>
+                    <EditShift key={shift.id} shift={shift} />
                   ))
                 : frivillig.omraade === "HEGNVAGT" && (
                     <AddShift frivilligId={frivillig.id} />
