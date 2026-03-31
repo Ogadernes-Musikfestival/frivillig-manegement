@@ -33,6 +33,19 @@ export async function POST(req: Request) {
 
   const validatedData = result.data;
 
+  const existing = await prisma.frivillig.findFirst({
+    where: {
+      email: validatedData.email,
+    },
+  });
+
+  if (existing) {
+    return NextResponse.json({
+      success: true,
+      message: "Du er allerede tilmeldt 🎉",
+    });
+  }
+
   const frivillig = await prisma.frivillig.create({
     data: {
       navn: validatedData.navn,
