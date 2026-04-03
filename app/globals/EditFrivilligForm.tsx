@@ -1,5 +1,7 @@
 "use client";
 
+import { Trash } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,13 +9,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { OMRAADE_LABELS, PrismaOmraade } from "@/lib/constants";
 
 import { useState } from "react";
-import { updateFrivillig } from "../actions/actions";
+import { deleteFrivillig, updateFrivillig } from "../actions/actions";
 
 type EditFrivilligFormProps = {
   frivillig: {
@@ -46,7 +59,7 @@ const EditFrivilligForm = ({ frivillig }: EditFrivilligFormProps) => {
         <form onSubmit={handleSubmit}>
           <DialogTitle>Edit Frivillig</DialogTitle>
 
-          <FieldGroup>
+          <FieldGroup className="mb-8">
             <Field>
               <FieldLabel>Navn</FieldLabel>
               <Input type="text" name="navn" defaultValue={frivillig.navn} />
@@ -86,8 +99,43 @@ const EditFrivilligForm = ({ frivillig }: EditFrivilligFormProps) => {
             </Field>
           </FieldGroup>
 
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-between items-end gap-3">
             <Button type="submit">Opdater</Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  className="flex items-center gap-2"
+                >
+                  <Trash className="w-4 h-4" />
+                  <span className="sr-only">Slet</span>
+                </Button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent>
+                <AlertDialogTitle>Er du sikker?</AlertDialogTitle>
+
+                <AlertDialogDescription>
+                  Denne handling kan ikke fortrydes. Dette vil permanent slette
+                  den frivillige.
+                </AlertDialogDescription>
+
+                <div className="flex justify-end gap-2 mt-4">
+                  <AlertDialogCancel>Annuller</AlertDialogCancel>
+
+                  <AlertDialogAction
+                    onClick={async () => {
+                      await deleteFrivillig(frivillig.id);
+                      setIsOpen(false);
+                    }}
+                  >
+                    Ja, slet
+                  </AlertDialogAction>
+                </div>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </form>
       </DialogContent>

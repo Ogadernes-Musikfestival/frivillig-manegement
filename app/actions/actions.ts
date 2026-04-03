@@ -106,3 +106,11 @@ export async function updateFrivillig(id: string, formData: FormData) {
 
   revalidatePath("/");
 }
+
+export async function deleteFrivillig(id: string) {
+  await prisma.frivillig.delete({
+    where: { id },
+  });
+
+  revalidatePath("/");
+}
