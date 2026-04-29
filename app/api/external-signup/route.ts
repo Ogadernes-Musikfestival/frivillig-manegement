@@ -42,7 +42,8 @@ export async function POST(req: Request) {
   if (existing) {
     return NextResponse.json({
       success: true,
-      message: "Du er allerede tilmeldt 🎉",
+      message:
+        "Tak fordi du forsøgte at tilmelde dig igen 🎉. Vi har virkelig brug for dig. Skriv venligst en mail til frivillig@oemfest.dk med hvilken opgave du gerne vil melde dig på. Tusind tak🙏",
     });
   }
 
